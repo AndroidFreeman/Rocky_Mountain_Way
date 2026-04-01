@@ -1,0 +1,1 @@
+print("Rocky Mountain Way")
