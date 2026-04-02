@@ -9,10 +9,10 @@ def resize_image(image, width, height):
 
 path = filedialog.askopenfilename()
 #参数设置
-gose = 11
+gose = 7
 ksize_s = 3
 contrast = 1.5
-bright = 10
+bright = 20
 dilate_s = 3
 dilatetime_s = 1
 
@@ -67,11 +67,22 @@ def output(image):
 
 
 while True:
-    change_parameters()
-    output(path)
-    check = input("是否继续调整参数？(y/n): ")
-    if check.lower() == 'y':
-        continue
+    check = input("调整参数？(y/n): ")
+    if check.lower() == 'n':
+        output(path)
+        check = input("是否换图？(y/n): ")
+        if check.lower() == 'y':
+            path = filedialog.askopenfilename()
+            pass
+        else:
+            print("程序结束。")
+            exit()
     else:
-        print("程序结束。")
-        exit()
+        change_parameters()
+        output(path)
+        check = input("是否继续调整参数？(y/n): ")
+        if check.lower() == 'y':
+            continue
+        else:
+            print("程序结束。")
+            exit()
