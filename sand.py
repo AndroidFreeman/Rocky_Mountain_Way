@@ -28,11 +28,6 @@ def trans(file,x=600,y=800):
     pre_img=pre(file,x,y)
     sand_img=sand_c(pre_img)
     live_img=live_sand(sand_img)
-
-
-
-
-
     return live_img
 
 hui=sand_c(pre("ren.jpg"))

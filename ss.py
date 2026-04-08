@@ -135,4 +135,4 @@ class DotSandArtGenerator:
 
 if __name__ == "__main__":
     gen = DotSandArtGenerator(dot_step=8, dot_min=2, dot_max=12, random_jitter=0.4)
-    gen.run("D:\_CodeProject\shahua\03 pnuttrellis (E) (N N).thr.webp")
+    gen.run("D:\Tree_Code\dune-weaver-main\_testpy\_test_input.jpg")
