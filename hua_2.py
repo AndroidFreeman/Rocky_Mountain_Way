@@ -125,3 +125,4 @@ if __name__ == "__main__":
         generate_one_stroke_animation(path)
     else:
         print("未选择图片")
+

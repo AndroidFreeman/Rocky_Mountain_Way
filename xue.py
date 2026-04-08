@@ -74,3 +74,4 @@ def generate_correct_orientation_spiral():
 
 if __name__ == "__main__":
     generate_correct_orientation_spiral()
+
