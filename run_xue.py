@@ -26,8 +26,8 @@ def main():
         finally:
             os.chdir(prev_cwd)
 
-        thr_src = os.path.join(work_dir, "10_correct_orientation.thr")
-        preview_src = os.path.join(work_dir, "10_correct_orientation_preview.png")
+        thr_src = os.path.join(work_dir, "rocky_mountain_way.thr")
+        preview_src = os.path.join(work_dir, "rocky_mountain_way_preview.png")
 
         thr_dst = os.path.join(out_dir, "xue_output.thr")
         preview_dst = os.path.join(out_dir, "xue_preview.png")

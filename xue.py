@@ -26,7 +26,7 @@ def generate_correct_orientation_spiral():
     
     thetas, rhos = [], []
     
-    with open("10_correct_orientation.thr", "w") as f:
+    with open("rocky_mountain_way.thr", "w") as f:
         for i in range(total_steps):
             theta = (i / total_steps) * max_theta
             base_rho = i / total_steps
@@ -34,8 +34,6 @@ def generate_correct_orientation_spiral():
             r_pixel = base_rho * (size / 2.0 - 1)
             x = int(size / 2.0 + r_pixel * math.cos(theta))
             
-            # 【核心修复】：计算机图像处理的 Y 轴是向下的（原点在左上角），而数学极坐标的 Y 轴是向上的！
-            # 必须用减号来翻转 Y 轴的映射，否则图案会上下颠倒
             y = int(size / 2.0 - r_pixel * math.sin(theta))
             
             x = np.clip(x, 0, size - 1)
@@ -68,9 +66,9 @@ def generate_correct_orientation_spiral():
     ax.set_rmax(1.0)
     ax.axis('off')
     
-    plt.savefig("10_correct_orientation_preview.png", dpi=dpi)
+    plt.savefig("rocky_mountain_way_preview.png", dpi=dpi)
     plt.close()
-    print("生成 10_correct_orientation.thr 成功！")
+    print("生成 rocky_mountain_way.thr 成功！")
 
 if __name__ == "__main__":
     generate_correct_orientation_spiral()
