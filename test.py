@@ -1,1 +1,0 @@
-print("Rocky Mountain Way")
