@@ -117,14 +117,14 @@ class DemoLauncher(tk.Tk):
         self.btn_hua = tk.Button(btns, text="运行 hua_2（一笔画）", command=self._run_hua)
         self.btn_mao = tk.Button(btns, text="运行 mao（沙画优化）", command=self._run_mao)
         self.btn_xue = tk.Button(btns, text="运行 xue（螺旋thr）", command=self._run_xue)
-        self.btn_zhu2 = tk.Button(btns, text="运行 zhu_2（沙画）", command=self._run_zhu2)
+        self.btn_zhu3 = tk.Button(btns, text="运行 zhu_3（沙画）", command=self._run_zhu3)
         self.btn_open_out = tk.Button(btns, text="打开输出目录", command=self._open_output_dir)
         self.btn_open_last = tk.Button(btns, text="打开最后输出", command=self._open_last_output)
 
         self.btn_hua.pack(side=tk.LEFT)
         self.btn_mao.pack(side=tk.LEFT, padx=(8, 0))
         self.btn_xue.pack(side=tk.LEFT, padx=(8, 0))
-        self.btn_zhu2.pack(side=tk.LEFT, padx=(8, 0))
+        self.btn_zhu3.pack(side=tk.LEFT, padx=(8, 0))
         self.btn_open_out.pack(side=tk.RIGHT)
         self.btn_open_last.pack(side=tk.RIGHT, padx=(0, 8))
 
@@ -282,7 +282,7 @@ class DemoLauncher(tk.Tk):
 
     def _set_running(self, running):
         state = tk.DISABLED if running else tk.NORMAL
-        for b in [self.btn_hua, self.btn_mao, self.btn_xue, self.btn_zhu2]:
+        for b in [self.btn_hua, self.btn_mao, self.btn_xue, self.btn_zhu3]:
             b.configure(state=state)
         self.status_var.set("运行中..." if running else "就绪")
 
@@ -397,14 +397,14 @@ class DemoLauncher(tk.Tk):
         ]
         self._run_process(argv, last_output_path=preview_path)
 
-    def _run_zhu2(self):
+    def _run_zhu3(self):
         img, out_dir = self._ensure_paths(require_image=True)
         if not img:
             return
-        out_path = os.path.join(out_dir, "zhu2_sand.png")
+        out_path = os.path.join(out_dir, "zhu3_sand.png")
         argv = [
             sys.executable,
-            os.path.join(repo_root(), "run_zhu2.py"),
+            os.path.join(repo_root(), "run_zhu3.py"),
             "--input",
             img,
             "--output",
