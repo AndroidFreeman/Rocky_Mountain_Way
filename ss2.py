@@ -40,10 +40,10 @@ def real_sand_art_effect(input_path, output_path="real_sand_art.png"):
     # ======================
     # 🔧 1. 生成多层沙粒噪点，模拟真实沙子的粗细混合
     # 细沙（小颗粒）
-    noise_fine = np.random.normal(0, 0.15, (h, w)).astype(np.float32)
+    noise_fine = np.random.normal(0, 0, (h, w)).astype(np.float32)
     noise_fine_blur = cv2.GaussianBlur(noise_fine, (3, 3), 0.8)
     # 粗沙（大颗粒，模拟沙堆堆积感）
-    noise_coarse = np.random.normal(0, 0.25, (h, w)).astype(np.float32)
+    noise_coarse = np.random.normal(0, 0, (h, w)).astype(np.float32)
     noise_coarse_blur = cv2.GaussianBlur(noise_coarse, (7, 7), 1.8)
     # 融合两层噪点，模拟真实沙粒的自然分布
     noise_final = cv2.addWeighted(noise_fine_blur, 0.6, noise_coarse_blur, 0.4, 0)
