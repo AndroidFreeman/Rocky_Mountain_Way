@@ -51,10 +51,17 @@ def generate_correct_orientation_spiral():
 
     r_pixels = base_rhos * (size / 2.0 - 1)
     # 算真实距离
+    # 算离圆心有多少个像素点
+    # 减个1, 防止越界
     xs = np.clip(size / 2.0 + r_pixels * np.cos(thetas), 0, size - 1).astype(int)
     # 算横坐标
+    # size/2是照片中心, 用半径/角度来计算具体位置
     ys = np.clip(size / 2.0 - r_pixels * np.sin(thetas), 0, size - 1).astype(int)
     # 算纵坐标
+    # 通过clip防止出界, 把这些点安在边界里面
+    # clip的用法(检查的数据, 最小值, 最大值)
+    # xs, ys算最原始的阿基米德螺旋线
+    # 这一步主要是探测颜色的坐标
 
     darkness = 1.0 - (img[ys, xs] / 255.0)
     # 扣像素, 看看灰度
@@ -67,8 +74,11 @@ def generate_correct_orientation_spiral():
     # 抖动最大幅度
 
     wobbles = np.where(darkness > 0.1, max_amplitude * darkness * np.sin(fixed_freq * thetas), 0.0)
+    # 手动抖动
+    # 用where找出照片很亮的地方, 小于0.1就是0 
     final_rhos = np.clip(base_rhos + wobbles, 0.0, 1.0)
     # 平滑加上抖动
+    # 把原始轨迹加上手动抖动
 
     # Part 3
     # 存入数据
@@ -88,9 +98,13 @@ def generate_correct_orientation_spiral():
     preview_img = np.full((size, size), 255, dtype=np.uint8)
     # 来一张正方形的白画板
     points = np.column_stack((draw_xs, draw_ys)).reshape((-1, 1, 2))
-    # 坐标点打包    
+    # 坐标点打包
+    # 把这些点传入points
+    # 把x, y拼成坐标
+    # 八股文属于是
     cv2.polylines(preview_img, [points], isClosed=False, color=0, thickness=1, lineType=cv2.LINE_AA)
     # 画线
+    # 开个抗锯齿先
 
     cv2.imwrite('rocky_mountain_way_preview.png', preview_img)
     # 存入png图片
