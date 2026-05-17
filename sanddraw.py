@@ -25,9 +25,9 @@ def extract_layers(edge,gray_img,min_area=100):
     return layers
 
 
-path = filedialog.askopenfilename()
+'''path = filedialog.askopenfilename()
 gray = gray(path)
 layerlist = extract_layers(gray,gray)
 for i,layer in enumerate(layerlist):
     cv2.imshow(f"layer{i}",layer)
-    cv2.waitKey(0)
+    cv2.waitKey(0)'''
