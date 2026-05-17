@@ -31,9 +31,3 @@ layerlist = extract_layers(gray,gray)
 for i,layer in enumerate(layerlist):
     cv2.imshow(f"layer{i}",layer)
     cv2.waitKey(0)
-
-
-
-path = filedialog.askopenfilename()
-gray = gray(path)
-layerlist = extract_layers(gray)
