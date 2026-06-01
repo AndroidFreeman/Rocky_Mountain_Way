@@ -1,9 +1,10 @@
-import math
-import cv2
+import math,cv2
 import numpy as np
 from shapely.geometry import Polygon, LineString
 from shapely import offset_curve
+from tkinter import filedialog
 
+MAX_POINT1 = 20000
 
 pi2 = 2*math.pi
 LINE_THRESH = 80       # 线条灰度阈值(越小越容易识别细线)
@@ -278,3 +279,74 @@ def fill_polar(txt_in_path: str, thr_out_path: str):
     print(f"原始点数：{len(origin_data)}")
     print(f"处理后总点数：{len(final_points)}")
     print(f"已保存至 {thr_out_path}")
+
+def gray(image):
+    gray = cv2.imread(image,0)
+    gray_blur = cv2.GaussianBlur(gray, (3, 3), 0)
+    edge = cv2.Canny(gray_blur,80,160)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7))
+    edge = cv2.morphologyEx(edge,cv2.MORPH_CLOSE,kernel)
+    # cv2.imshow("gray",edge)
+    # cv2.waitKey(0)
+    return edge
+
+def extract_layers(edge,gray_img,min_area=100):
+    num_labels,labels=cv2.connectedComponents(edge)
+    layers=[]
+    for i in range(1,num_labels):
+        mask=(labels==i).astype(np.uint8)*255
+        if cv2.countNonZero(mask)<min_area:
+            continue
+        layer=cv2.bitwise_and(gray_img,gray_img,mask=mask)
+        layers.append(layer)
+
+    return layers
+
+def merge_thr(thr_path_list, save_merge_path):
+    """
+    合并多个thr点位文件
+    :param thr_path_list: 所有thr路径列表
+    :param save_merge_path: 合并后保存路径
+    """
+    all_lines = []
+    for path in thr_path_list:
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+                all_lines.extend(lines)
+        except Exception as e:
+            print(f"跳过异常文件 {path}: {e}")
+    
+    if len(all_lines) > MAX_POINT1:
+        step = len(all_lines)//MAX_POINT1
+        all_lines = all_lines[::step]
+    
+    # 写入合并文件
+    with open(save_merge_path, "w", encoding="utf-8") as fw:
+        fw.writelines(all_lines)
+    print(f"合并完成，共 {len(all_lines)} 个点位")
+
+def Get_thr(out_path: str="polar.thr"):
+    path = filedialog.askopenfilename()
+    edge = gray(path)
+    list = extract_layers(edge,edge)
+    path_list = []
+    for i,layer in enumerate(list):
+        img = layer
+        if len(img.shape) == 3:
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        else:
+            img = img.copy()  # 已经是灰度，直接用
+        s = "polar_" + str(i) + ".thr"
+        apiece_convert_polar(img,s) 
+        path_list.append(s)
+        # img = tran.img_to_spiral(img)
+        # cv2.imshow("abc", img)
+        # cv2.waitKey(0)
+    merge_thr(path_list,out_path)
+
+
+
+if __name__ == "__main__":
+    # tran.apiece_convert_polar()
+    Get_thr()

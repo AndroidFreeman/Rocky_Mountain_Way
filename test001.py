@@ -1,6 +1,8 @@
 import tran,sanddraw,cv2
 from tkinter import filedialog
 
+MAX_POINT1 = 20000
+
 def merge_thr(thr_path_list, save_merge_path):
     """
     合并多个thr点位文件
@@ -15,6 +17,11 @@ def merge_thr(thr_path_list, save_merge_path):
                 all_lines.extend(lines)
         except Exception as e:
             print(f"跳过异常文件 {path}: {e}")
+    
+    if len(all_lines) > MAX_POINT1:
+        step = len(all_lines)//MAX_POINT1
+        all_lines = all_lines[::step]
+    
     # 写入合并文件
     with open(save_merge_path, "w", encoding="utf-8") as fw:
         fw.writelines(all_lines)
