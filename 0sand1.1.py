@@ -18,8 +18,8 @@ P = -7                  #-7:疏,-3:密
 
 def apiece_convert_polar(img,polar_thr :str = "polar.thr"):# 传入图img
     h, w = img.shape[:2]
-    xy_txt = "save_.txt"
-    polar_txt = "polar_.txt"
+    xy_txt = "polar/save_.txt"
+    polar_txt = "polar/polar_.txt"
     # img = img_to_spiral(img)
     piece_convert_xy(img,xy_txt)
     batch_convert_xy_to_polar(xy_txt,polar_txt,w,h)
@@ -411,7 +411,7 @@ def merge_thr(thr_path_list, save_merge_path):
         fw.writelines(all_lines)
     print(f"合并完成，共 {len(all_lines)} 个点位")
 
-def Get_thr(out_path: str="polar.thr"):
+def Get_thr(out_path: str="polar.thr"):#改结果路径
     path = filedialog.askopenfilename()
     edge = gray(path)
     list = extract_layers(edge,edge)
@@ -422,7 +422,7 @@ def Get_thr(out_path: str="polar.thr"):
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         else:
             img = img.copy()  # 已经是灰度，直接用
-        s = "polar_" + str(i) + ".thr"
+        s = "polar/polar_" + str(i) + ".thr"
         apiece_convert_polar(img,s) 
         path_list.append(s)
         # img = tran.img_to_spiral(img)
